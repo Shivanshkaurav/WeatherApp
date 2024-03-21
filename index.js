@@ -6,15 +6,16 @@ const weatherField = document.querySelector(".weather3 span");
 const searchField = document.querySelector(".searchField");
 const form = document.querySelector("form");
 
-let target = "kolkata";
+let target = "mumbai";
 
-const fetchData = async()=>{
-    const url = `https://api.weatherapi.com/v1/current.json?key=13feccae0b2e4b47a59185354242003&q=${target}`;
+const fetchData = async(target)=>{
+    try {
+        const url = `https://api.weatherapi.com/v1/current.json?key=13feccae0b2e4b47a59185354242003&q=${target}`;
 
     const response = await fetch(url);
     const data = await response.json();
 
-    console.log(data);
+    // console.log(data);
 
     const {
         current: {
@@ -28,6 +29,9 @@ const fetchData = async()=>{
     } = data;
 
     updateDom(temp_c, name, localtime, icon, text);
+    } catch (error) {
+        alert("Location Not Found");
+    }
 }
 
 function updateDom(tempertaure, city, time, emoji, text){
@@ -42,7 +46,7 @@ function updateDom(tempertaure, city, time, emoji, text){
     weatherField.innerText = text;
 }
 
-fetchData();
+fetchData(target);
 
 function getDay(dayNum){
     const arr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -50,9 +54,11 @@ function getDay(dayNum){
     return arr[dayNum];
 }
 
-form.addEventListener("submit", (e)=>{
+function search(e){
     e.preventDefault();
     target = searchField.value;
-    console.log(target);
-})
+    fetchData(target);
+};
+
+form.addEventListener("submit", search)
 
