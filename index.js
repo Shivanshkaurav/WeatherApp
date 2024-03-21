@@ -3,9 +3,8 @@ const cityField = document.querySelector(".weather2 p");
 const dataField = document.querySelector(".weather2 span");
 const emojiField = document.querySelector(".weather3 img");
 const weatherField = document.querySelector(".weather3 span");
-const input = document.querySelector("input");
-// const searchField = document.querySelector(".searchField");
-// const form = document.querySelector("form");
+const searchField = document.querySelector(".searchField");
+const form = document.querySelector("form");
 
 let target = "kolkata";
 
@@ -51,5 +50,9 @@ function getDay(dayNum){
     return arr[dayNum];
 }
 
-console.log(input);
+form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    target = searchField.value;
+    console.log(target);
+})
 
